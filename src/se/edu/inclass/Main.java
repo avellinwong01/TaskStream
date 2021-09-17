@@ -23,6 +23,13 @@ public class Main {
 //        printDeadlinesUsingStreams(tasksData);
         ArrayList<Task> filteredList = filterTasksByString(tasksData, "11");
         printData(filteredList);
+
+        printDeadlinesUsingStreams(tasksData);
+        System.out.println("Total number of deadlines (using stream): " +
+                countDeadlinesUsingStream(tasksData));
+
+
+
     }
 
     private static int countDeadlines(ArrayList<Task> tasksData) {
@@ -35,10 +42,24 @@ public class Main {
         return count;
     }
 
+    private static int countDeadlinesUsingStream(ArrayList<Task> tasks) {
+        int count = (int) tasks.stream()
+                .filter((t) -> t instanceof Deadline) // filtering using lambda
+                .count(); // aggregate function
+        return count;
+    }
+
     public static void printData(ArrayList<Task> tasksData) {
+        System.out.println("Printing data by looping");
         for (Task t : tasksData) {
-            System.out.println(t);
+            System.out.println(t); // type sout
         }
+    }
+
+    public static void printDataWithStreams(ArrayList<Task> tasks) {
+        System.out.println("Printing data using stream");
+        tasks.stream() // convert to stream
+                .forEach(System.out::println); // type soutc, treating this as an operation (terminal operator)
     }
 
     public static void printDeadlines(ArrayList<Task> tasksData) {
@@ -48,7 +69,6 @@ public class Main {
             }
         }
     }
-
 
     public static void printDeadlinesUsingStreams(ArrayList<Task> tasks) {
         tasks.stream()
@@ -63,4 +83,5 @@ public class Main {
                 .collect(Collectors.toList());
         return filteredList;
     }
+
 }

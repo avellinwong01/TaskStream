@@ -16,10 +16,17 @@ public class Main {
         DataManager dm = new DataManager("./data/data.txt");
         ArrayList<Task> tasksData = dm.loadData();
 
-        System.out.println("Printing deadlines");
-        printDeadlines(tasksData);
+//        System.out.println("Printing deadlines");
+//        printDeadlines(tasksData);
+//
+//        System.out.println("Total number of deadlines: " + countDeadlines(tasksData));
+//        //printData(tasksData);
+//        printDataWithStreams(tasksData);
+        printDeadlinesWithStreams(tasksData);
+        System.out.println("Total number of deadlines (using stream): " +
+                countDeadlinesUsingStream(tasksData));
 
-        System.out.println("Total number of deadlines: " + countDeadlines(tasksData));
+
 
     }
 
@@ -33,9 +40,17 @@ public class Main {
         return count;
     }
 
+    private static int countDeadlinesUsingStream(ArrayList<Task> tasks) {
+        int count = (int) tasks.stream()
+                .filter((t) -> t instanceof Deadline) // filtering using lambda
+                .count(); // aggregate function
+        return count;
+    }
+
     public static void printData(ArrayList<Task> tasksData) {
+        System.out.println("Printing data by looping");
         for (Task t : tasksData) {
-            System.out.println(t);
+            System.out.println(t); // type sout
         }
     }
 
